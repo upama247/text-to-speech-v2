@@ -43,5 +43,4 @@ def edit():
     return render_template('index.html', name=name, class_section=class_section, roll_number=roll_number)
 
 if __name__ == '__main__':
-    # Bind to 0.0.0.0 for external access and use the dynamic PORT from Render
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    app.run(debug=True, host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
