@@ -1,14 +1,13 @@
 from flask import Flask, render_template, request
 import pyttsx3
 from datetime import datetime
+import os
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def index():
     return render_template('index.html', message=None, greeting=None, name=None, class_section=None, roll_number=None)
-
 
 @app.route('/speak_details', methods=['POST'])
 def speak_details():
@@ -36,7 +35,6 @@ def speak_details():
     return render_template('index.html', message=message, greeting=f"Hello, {name}! Welcome to your dashboard.",
                            name=name, class_section=class_section, roll_number=roll_number)
 
-
 @app.route('/edit', methods=['POST'])
 def edit():
     name = request.form['name']
@@ -44,6 +42,6 @@ def edit():
     roll_number = request.form['roll_number']
     return render_template('index.html', name=name, class_section=class_section, roll_number=roll_number)
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Bind to 0.0.0.0 for external access and use the dynamic PORT from Render
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
